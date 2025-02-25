@@ -15,11 +15,11 @@ class Exercise
   # Return a string in which every word in "str" that exceeds 4 characters is replaced with "marklar".
   # If the word being replaced has a capital first letter, it should instead be replaced with "Marklar".
   def self.marklar(str)
-    words = str.split(" ") # array
+    words = str.split(/\b/) # array, split by regex word (b)oundary
     
     words.each_with_index do |word, i| # TODO: vs map
-      if word.length > 4
-        if word[0] == word[0].upcase # no char type in ruby
+      if word.match?(/\w+/) and word.length > 4 # match regex (w)ord
+        if word[0] == word[0].upcase # no char type in ruby, no capitalized?
           words[i] = "Marklar"
         else
           words[i] = "marklar"
@@ -29,7 +29,7 @@ class Exercise
       end
     end
 
-    return words # for clarity
+    return words.join
   end
 
 
@@ -50,7 +50,7 @@ class Exercise
       	return 1
     end
     
-    c, n = 1, 1 # current, next; default values: f(1)=1, f(2)=1
+    c, n, t = 1, 1, 0 # current, next, temp swap; default values: f(1)=1, f(2)=1
       # note syntax error: a, b = 1
       # note: next is a keyword?
     sum = 0
@@ -58,9 +58,10 @@ class Exercise
     # doesn't ask for the sequence.. just the sum
     # so no need to store the sequence in an array
     (nth - 2).times do
+      t = c # ruby probably has fancy swap syntax..
       c = n # iterate
       n = c + n # next = sum of last two
-      
+
       if n.even?
       	sum += n
       end
