@@ -15,21 +15,16 @@ class Exercise
   # Return a string in which every word in "str" that exceeds 4 characters is replaced with "marklar".
   # If the word being replaced has a capital first letter, it should instead be replaced with "Marklar".
   def self.marklar(str) # note: use self.method for static methods; the tests use it
-    words = str.split(/\b/) # array, split by regex word (b)oundary
-    
-    words.each_with_index do |word, i| # TODO: vs map
-      if word.match?(/\w+/) and word.length > 4 # match regex (w)ord
-        if word[0] == word[0].upcase # no char type in ruby # NOTE: word.capitalize ensures the rest of the word is lowercase
-          words[i] = "Marklar"
-        else
-          words[i] = "marklar"
-        end
-      #else
-          #words[i] = word
+    words = str.split(/\b/).map do |word| # array, split by regex word (b)oundary NOTE: punctuation counts as a seperate word/element
+    # iteration method: replaces words in an array, otherwise preserves the original word/element
+    #words.each_with_index do |word, i|
+      if word.match?(/\w+/) and word.length > 4 # match regex (w)ord character (it's quite strange..: letters, digits, and underscores, NOT apostrophes) + repeat
+      # /\A[a-zA-Z']+\z/ # letters and apostrophes
+        word[0] == word[0].upcase ? "Marklar" : "marklar" # no char type in ruby # NOTE: word.capitalize means the rest of the word is lowercase
+      else
+        word # necessary if using map
       end
-    end
-
-    return words.join
+    end.join #return words.join
   end
 
 
@@ -40,13 +35,8 @@ class Exercise
 
   # procedural
   def self.even_fibonacci(nth)
-    # case
-    #   when nth < 0 # note: couldn't combine this with the next case statement..
-    #   	raise "no negative"
-    # end
-    
     case nth
-      when ->(x) { x < 0 } # hmm
+      when -> (x) { x < 0 } # when nth < 0 NOTE: cannot combine expression with value comparisons.. :/
         raise "no negative"
       when 0
       	return 0
