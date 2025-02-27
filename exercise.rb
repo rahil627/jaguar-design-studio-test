@@ -19,7 +19,7 @@ class Exercise
     
     words.each_with_index do |word, i| # TODO: vs map
       if word.match?(/\w+/) and word.length > 4 # match regex (w)ord
-        if word[0] == word[0].upcase # no char type in ruby
+        if word[0] == word[0].upcase # no char type in ruby # NOTE: word.capitalize ensures the rest of the word is lowercase
           words[i] = "Marklar"
         else
           words[i] = "marklar"
