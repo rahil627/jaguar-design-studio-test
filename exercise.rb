@@ -37,6 +37,8 @@ class Exercise
   # the "nth" term in the sequence
   # eg. the Fibonacci sequence up to 6 terms is (1, 1, 2, 3, 5, 8),
   # and the sum of its even numbers is (2 + 8) = 10
+
+  # procedural
   def self.even_fibonacci(nth)
     # case
     #   when nth < 0 # note: couldn't combine this with the next case statement..
@@ -71,6 +73,22 @@ class Exercise
     
     return sum
   end
+
+# ruby's functional ways are so much neater!
+def self.fib_functional(n)
+  raise "input invalid: <= 2" if nth <= 2
+  
+  s = [0, 1] # sequence
+  for i in 2..n
+    s << s[i - 1] + s[i - 2] # append array/hash syntax <<
+  end
+  
+  s
+end
+
+def self.fib_even_sum(n)
+  Exercise.fib_functional(n).select(&:even?).sum
+end
 
   def self.test_marklar
     puts Exercise.marklar("  1 four more-than-four Capital-falcon")
