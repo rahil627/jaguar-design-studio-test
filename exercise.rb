@@ -18,8 +18,8 @@ class Exercise
     words = str.split(/\b/).map do |word| # array, split by regex word (b)oundary NOTE: punctuation counts as a seperate word/element
     # iteration method: replaces words in an array, otherwise preserves the original word/element
     #words.each_with_index do |word, i|
+      # letters_and_apostrophes = "/\A[a-zA-Z']+\z/"
       if word.match?(/\w+/) and word.length > 4 # match regex (w)ord character (it's quite strange..: letters, digits, and underscores, NOT apostrophes) + repeat
-      # /\A[a-zA-Z']+\z/ # letters and apostrophes
         word[0] == word[0].upcase ? "Marklar" : "marklar" # no char type in ruby # NOTE: word.capitalize means the rest of the word is lowercase
       else
         word # necessary if using map
@@ -32,9 +32,12 @@ class Exercise
   # the "nth" term in the sequence
   # eg. the Fibonacci sequence up to 6 terms is (1, 1, 2, 3, 5, 8),
   # and the sum of its even numbers is (2 + 8) = 10
+  def self.even_fibonacci(n)
+    Exercise.fib_even_sum_functional(n)
+    #Exercise.fib_even_sum_procedural(n)
+  end
 
-  # procedural
-  def self.even_fibonacci(nth)
+  def self.fib_even_sum_procedural(nth)
     case nth
       when -> (x) { x < 0 } # when nth < 0 NOTE: cannot combine expression with value comparisons.. :/
         raise "no negative"
@@ -64,21 +67,21 @@ class Exercise
     return sum
   end
 
-# ruby's functional ways are so much neater!
-def self.fib_functional(n)
-  raise "input invalid: <= 2" if nth <= 2
-  
-  s = [0, 1] # sequence
-  for i in 2..n
-    s << s[i - 1] + s[i - 2] # append array/hash syntax << (not += / concat) # modifies array in place ~O(1)
-  end
-  
-  s
-end
+  # ruby's functional ways are so much neater!
+  def self.fib_functional(n)
+    raise "input invalid: <= 2" if n <= 2
 
-def self.fib_even_sum(n)
-  Exercise.fib_functional(n).select(&:even?).sum
-end
+    s = [0, 1] # sequence
+    for i in 2..n
+      s << s[i - 1] + s[i - 2] # append array/hash syntax << (not += / concat) # modifies array in place ~O(1)
+    end
+
+    s
+  end
+
+  def self.fib_even_sum_functional(n)
+    Exercise.fib_functional(n).select(&:even?).sum
+  end
 
   def self.test_marklar
     puts Exercise.marklar("  1 four more-than-four Capital-falcon")
