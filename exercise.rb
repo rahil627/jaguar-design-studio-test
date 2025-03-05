@@ -100,9 +100,20 @@ class Exercise
     end
   end
 
+  def self.test_freeze
+    s = Exercise.fib_functional(5)
+    begin
+      s[2] = "mutation" # deep
+      #s << ["mutation"] # shallow
+    rescue => e
+      puts e
+    end
+  end
+
 end
 
 
 #Exercise.test_marklar
 #Exercise.test_fib
+#Exercise.test_freeze
 #binding.pry
