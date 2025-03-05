@@ -76,7 +76,7 @@ class Exercise
       s << s[i - 1] + s[i - 2] # append array/hash syntax << (not += / concat) # modifies array in place ~O(1)
     end
 
-    s
+    s.freeze
   end
 
   def self.fib_even_sum_functional(n)
