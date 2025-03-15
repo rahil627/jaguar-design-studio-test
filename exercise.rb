@@ -33,8 +33,9 @@ class Exercise
   # eg. the Fibonacci sequence up to 6 terms is (1, 1, 2, 3, 5, 8),
   # and the sum of its even numbers is (2 + 8) = 10
   def self.even_fibonacci(n)
-    Exercise.fib_even_sum_functional(n)
-    #Exercise.fib_even_sum_procedural(n)
+    #Exercise.fib_even_sum_recursive(n) # 5.9, 5.6, 6.5
+      # NOTE: even at n = 35, it's noticeable
+    Exercise.fib_even_sum_functional(n) # .004, .01
   end
 
   def self.fib_even_sum_procedural(nth)
@@ -67,12 +68,12 @@ class Exercise
     return sum
   end
 
-  # ruby's functional ways are so much neater!
+  # ruby's functional ways are so much neater, more modular! can't wait to use elixir!!
   def self.fib_functional(n)
     raise "input invalid: <= 2" if n <= 2
 
     s = [0, 1] # sequence
-    for i in 2..n
+    (2..n).each do |i|
       s << s[i - 1] + s[i - 2] # append array/hash syntax << (not += / concat) # modifies array in place ~O(1)
     end
 
@@ -81,6 +82,25 @@ class Exercise
 
   def self.fib_even_sum_functional(n)
     Exercise.fib_functional(n).select(&:even?).sum
+  end
+
+  def self.fib_recursive(n)
+    return 0 if n == 0 # necessary!
+    return 1 if n == 1
+    fib_recursive(n-1) + fib_recursive(n-2)
+  end
+
+  def self.fib_even_sum_recursive(n)
+    return 0 if n < 2
+
+    s = 0
+
+    (2..n).each do |i|
+      t = Exercise.fib_recursive(i)
+      s += t if t.even?
+    end
+
+    s
   end
 
   def self.test_marklar
