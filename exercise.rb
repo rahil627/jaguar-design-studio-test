@@ -36,6 +36,17 @@ class Exercise
     #Exercise.fib_even_sum_recursive(n) # 5.9, 5.6, 6.5
       # NOTE: even at n = 35, it's noticeable
     Exercise.fib_even_sum_functional(n) # .004, .01
+      # uses the most memory: one array
+      # but maybe CPUs optimize for this stuff..
+    #Exercise.fib_even_sum_procedural(n) # .009, .008, .02
+
+    # ruby's multiple loop syntaxes behave slightly different
+    # i think it depends on if you add an iteator and an index:
+    # 5.times do > (0..5).each > (0..5).each |i|)
+    # while (i < data.count) > data.each > data.each |i|
+    # for is just sugar in ruby
+    # all of it won't matter once it goes into yjit or llvm! :)
+    # so just use n.times do, (0..n).each |i|, data.each |i| for everything!
   end
 
   def self.fib_even_sum_procedural(nth)
@@ -115,7 +126,7 @@ class Exercise
     end
     # wow, what a pain.. use puts instead of exception
 
-    for i in 0..35 do
+    35.times do |i|
       puts Exercise.even_fibonacci(i)
     end
   end
@@ -136,4 +147,5 @@ end
 #Exercise.test_marklar
 #Exercise.test_fib
 #Exercise.test_freeze
-#binding.pry
+
+#binding.pry # required to use pry
