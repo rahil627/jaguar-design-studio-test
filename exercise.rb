@@ -33,12 +33,15 @@ class Exercise
   # eg. the Fibonacci sequence up to 6 terms is (1, 1, 2, 3, 5, 8),
   # and the sum of its even numbers is (2 + 8) = 10
   def self.even_fibonacci(n)
-    #Exercise.fib_even_sum_recursive(n) # 5.9, 5.6, 6.5
+    #Exercise.fib_even_sum_recursive(n) # 5.9, 5.6, 6.5, --yjit 1.3!, --mjit 4.3
       # NOTE: even at n = 35, it's noticeable
-    Exercise.fib_even_sum_functional(n) # .004, .01
+    Exercise.fib_even_sum_functional(n) # .004, .01, --yjit .017, --mjit .017
       # uses the most memory: one array
       # but maybe CPUs optimize for this stuff..
-    #Exercise.fib_even_sum_procedural(n) # .009, .008, .02
+    #Exercise.fib_even_sum_procedural(n) # .009, .008, .02, --yjit .02, --mjit .0026!
+
+    # --yjit adds a tiny startup time of ~1s, but otherwise, worth it!
+    # --mjit did the best for procedural..??
 
     # ruby's multiple loop syntaxes behave slightly different
     # i think it depends on if you add an iteator and an index:
